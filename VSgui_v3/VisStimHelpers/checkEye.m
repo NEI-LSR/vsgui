@@ -22,6 +22,9 @@ function [pass_eye,trEye,lastEyePos,tchosen] = checkEye(trEye,ex,targ,pass_eye,l
 % 03/07/15  hn   bug-fix to re-center eye position online
 % 07/05/22  hn   include freeViewing option
 % 11/05/25  cmz  modified to work in the dome w/ deg/volt calib gain
+% 01/05/26  cmz  bug-fix to assign correct value to targPos, this still
+%                needs to be updated and tested in the dome.
+
 %disp('in check eye')
 if nargin < 7
     xPos = 0;
@@ -69,7 +72,9 @@ else % check whether eye is one of the targets
     if geomCorrect
         targPos = ex.targ.PosDeg;
     else
-        targPos = ex.targ.Pos;
+        % cmz - needs to be targ.Pos, not ex.targ.Pos so it can be updated
+        % trial-by-trial. This needs to be fixed and tested in the dome too
+        targPos = targ.Pos;
     end
 
     if ~isempty(ex.eyeCal.LXPos)
