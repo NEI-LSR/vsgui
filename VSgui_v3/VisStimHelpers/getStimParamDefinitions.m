@@ -1,0 +1,169 @@
+function params= getStimParamDefinitions()
+
+% function params = getStimParamDefinitions
+% here we define the meaning of the stimulus parameters whose values are
+% specified in ex.stim.vals
+% each fieldname is given in:
+%       params.name
+% if available, the corresponding definition is given in:
+%       params.definition
+
+% history
+% 12/23/14  hn; wrote it
+% 08/06/18  hn: added second stimuli for gratings (x02, y02, stim2)
+% 08/19/24  hn: added parameter definition for imageID
+
+n=1;
+params(n).name = 'adaptation';  
+n = n+1;
+params(n).name = 'adaptationDur';
+n = n+1;
+params(n).name = 'adaptationMe';
+n = n+1;
+params(n).name = 'adaptationOr';
+n = n+1;
+params(n).name = 'ce' ;  
+params(n).definition = 'interocular correlation of RDS: -1 0 1';
+n = n+1;
+params(n).name = 'co' ;  
+params(n).definition = 'contrast';
+n = n+1;
+params(n).name = 'Dc' ;
+params(n).definition='signal strength for RC rds'    
+n = n+1;
+params(n).name = 'dcol'   ;
+params(n).definition='dot color';
+n = n+1;
+params(n).name = 'dd'    ;
+params(n).definition='dot density';
+n = n+1;
+params(n).name = 'dotSz'   ;
+params(n).definition='dotSz';
+n = n+1;
+params(n).name = 'dyn'   ;
+params(n).definition='dynamic RDS';
+n = n+1;
+params(n).name = 'flickerTF' ;
+params(n).definition='TF for bar flickering';
+n = n+1;
+params(n).name = 'hdx_range' ;
+params(n).definition='for hdx noise distribution of Dc';
+n = n+1;
+params(n).name = 'me'   ;
+params(n).definition='monocular stimulus'
+n = n+1;
+params(n).name = 'me_range' ;
+params(n).definition='for RC stimulus';
+n = n+1;
+params(n).name = 'or_range';
+params(n).definition='for RC stimulus';
+n = n+1;
+params(n).name = 'phase' ;
+params(n).definition = 'phase';
+n = n+1;
+params(n).name = 'pulseDur' ;
+params(n).definition = 'pulse duration for fullfield stimulus (in sec)';
+n = n+1;
+params(n).name = 'interPulseInterval' ;
+params(n).definition = 'interpulse interval for fullfield flash (in sec)';
+n = n+1;
+params(n).name = 'pulseType' ;
+params(n).definition = 'pulse type: unimodal (1) or bimodal (2)';
+n = n+1;
+params(n).name = 'RC'   ;
+params(n).definition='reverse correlation';
+n = n+1;
+params(n).name = 'RCperiod'  ;
+params(n).definition='reverse correlation refresh period (video frames)';
+n = n+1;
+params(n).name = 'shi'  ;
+params(n).definition='surround height';
+n = n+1;
+params(n).name = 'shdx'   ;
+params(n).definition='surround hor. disparity';
+n = n+1;
+params(n).name = 'sf_range' ;
+params(n).definition='for RC stimulus';
+n = n+1;
+params(n).name = 'st' ;
+params(n).definition='stimulus on or blank';
+n = n+1;
+params(n).name = 'st_range' ;
+params(n).definition='for RC stimulus';
+n = n+1;
+params(n).name = 'svdx'  ;
+params(n).definition='surround vert. disparity';
+n = n+1;
+params(n).name = 'swi' ;
+params(n).definition='surround width';
+n = n+1;
+params(n).name = 'targOn_delay' ;
+params(n).definition='target Onset delay';
+n = n+1;
+params(n).name = 'sf' ;
+params(n).definition='spatial frequency';
+n = n+1;
+params(n).name = 'tf' ;
+params(n).definition='temporal frequency';
+n = n+1;
+params(n).name = 'or' ;
+params(n).definition='orientation in degrees';
+n = n+1;
+params(n).name = 'x0' ;
+params(n).definition='center of stimulus (x-position)';
+params(n).name = 'x02' ;
+params(n).definition='center of stimulus 2 (x-position)';
+n = n+1;
+params(n).name = 'x0_range' ;
+params(n).definition='for RC stimulus';
+n = n+1;
+params(n).name = 'y0' ;
+params(n).definition='center of stimulus (y-position)';
+params(n).name = 'y02' ;
+params(n).definition='center of stimulus 2 (y-position)';
+n = n+1;
+params(n).name = 'y0_range' ;
+params(n).definition='for RC stimulus';
+n = n+1;
+params(n).name = 'wi' ;
+params(n).definition='width of stimulus in degrees';
+n = n+1;
+params(n).name = 'hi' ;
+params(n).definition='height of stimulus in degrees';
+n = n+1;
+params(n).name = 'rds2' ;
+params(n).definition='are we showing 2 rds stimuli (yes:1/no:0)';
+params(n).name = 'stim2' ;
+params(n).definition='are we showing 2 grating stimuli (yes:1/no:0)';
+n = n+1;
+params(n).name = 'co2' ;
+params(n).definition='contrast of second stimulus';
+n = n+1;
+params(n).name = 'hdx2' ;
+params(n).definition='horizontal disparity of second stimulus';
+n = n+1;
+params(n).name = 'Dc2' ;
+params(n).definition='disparity strength of second stimulus';
+n = n+1;
+params(n).name = 'flashCueDotSz' ;
+params(n).definition='size (pixels) of flashed cue for spatial attention';
+n = n+1;
+params(n).name = 'flashCueDur' ;
+params(n).definition='duration of flashed cue for spatial attention';
+n = n+1;
+params(n).name = 'flashCueOnsetTime' ;
+params(n).definition='onset time (in sec) after stimulus onset for flashed cue for SA';
+n = n+1;
+params(n).name = 'flashCueYoffset' ;
+params(n).definition='y-offset (in degrees) of flashed cue for spatial attention';
+n = n+1;
+params(n).name = 'y_OffsetCue' ;
+params(n).definition='y-offset (in dva) of stimulus towards the correct target (signed)';
+n = n+1;
+params(n).name = 'fixedSeed' ;
+params(n).definition='if set to 1, we will use a fixed seed for the RDS';
+params(n).name = 'imID' ;
+params(n).definition='image ID (index to identify image name in stim.vals.imageNames)';
+
+
+
