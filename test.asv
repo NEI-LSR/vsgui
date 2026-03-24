@@ -1,0 +1,17 @@
+dataDir = GetDataDir(hSGL,0);
+[~,sessionDir] = fileparts(dataDir);
+
+str = fullfile(sessionDir,r);
+runEphysFiles = EnumDataDir(hSGL, 0);
+
+idx = cellfun(@(x) contains(x,str),runEphysFiles);
+runEphysFiles = runEphysFiles(idx);
+
+pat = [str '_g'] + digitsPattern(1,4);
+
+b= cellfun(@(x) extract(x,pat), runEphysFiles,'uniformoutput',false);
+
+c = cellfun(@(x) str2num(strrep(x,[str '_g'],'')
+a = extr
+
+

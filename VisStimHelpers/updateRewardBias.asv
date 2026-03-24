@@ -1,0 +1,29 @@
+function [ex,switchTrials] = updateRewardBias(ex,switchTrials,dailyLog)
+
+% function [ex,switchTrials] = updateRewardBias(ex,switchTrials,dailyLog)
+% 
+% helper function to update the rewardBias
+% was previously included as part of runEpxt
+%
+% history
+% 01/29/26  hn: moved from runExpt to si
+
+% adjust the down-scaling of the reward; default is 1
+ex.reward.scale = min([ex.reward.scaleStepSize+ex.reward.nTrialsAfterShake*ex.reward.scaleStepSize,1]);
+% 05/20/24: bt: switch rewardbias at a specific trial number if reward
+% asymmetry. introduced a variable called "ex.reward.type" to
+% provide control over switching between sequential or
+% asymmetric reward types
+% 1/21/25: st: changed names of asymmetry types to stimulusAsymmetry and
+% responseAymmetry from "asymmetry" alone
+% 3/10/25: st: updated switchTrials tracker to be robust to new experiments
+% starting. Previous error noted where when a new experiment was started
+% the switchTrials condition would activate and flip the rewardbias sign.
+% 4/11/25 st: add switchTrials initialization to line 245 to allow for
+%             "switchTrial" variable updating during pause.
+if ex.exp.afc && strcmp(ex.reward.type((end-8):end),'Asymmetry')
+    if ~isempty(switchTrials) && dailyLog.nTrialsPerDay > switchTrials(1)
+        ex.reward.rewardBias = fliplr(ex.reward.rewardBias);
+    end
+    switchTrials = ex.reward.switchTrials(ex.reward.switchTrials >= (dailyLog.nTrialsPerDay));
+end

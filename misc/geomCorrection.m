@@ -1,0 +1,45 @@
+function [outX,outY] = geomCorrection(x,y,exSetup)
+% Geometry correction
+% Applies the screen warping calibration to pairs of x and y inputs. Useful
+% for plotting visual elements to the screen that aren't plotted in the 
+% main window and thus don't have the geometry correction automatically 
+% applied, eg elements in the overlay window.
+%
+% INPUTS:
+% x, vector of x coordinates in native pixels
+% y, vector of y coordinates in native pixels, must be same length as x
+% exSetup, input ex.setup from VSGui startup
+%
+% OUTPUTS:
+% outX, x coordinates geometrically corrected (eg warped for the dome)
+% outY, y coordinates geometrically corrected
+%
+% history
+% 11/04/2025  cmz   wrote it
+
+% make sure vectors are same length
+if ~(length(x)==length(y))
+    error('x and y vectors must be the same length')
+end
+if nargin<4
+    invFlag = 0;
+end
+
+
+% column vectors
+x = x(:);
+y = y(:);
+% Do conversion in the dome in B1 A19 using lookup tables in scal
+% Find index of desired position within native screen pixels grid
+[~,xInd]    = min(abs(exSetup.scal.XGRID_PREWARP(1,:)-x),[],2);
+[~,yInd]    = min(abs(exSetup.scal.YGRID_PREWARP(:,1)'-y),[],2);
+
+% Take corresponding pixel values of the indices
+pixelXTmp  = exSetup.scal.XGRID_WARP(yInd,xInd)';
+pixelYTmp  = exSetup.scal.YGRID_WARP(yInd,xInd);
+
+outX      = diag(pixelXTmp);
+outY      = diag(pixelYTmp);
+
+
+return
