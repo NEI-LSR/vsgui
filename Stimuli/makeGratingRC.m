@@ -24,6 +24,7 @@ function ex=makeGratingRC(ex)
 % 05/05/24  hn: open new textures only if needed, and close existing
 %           grating texture if it exists.
 % 12/02/25  hn: removed ppd (now using pixel2deg function instead)
+% 03/25/26  cmz: check for geometry correction in placing the stim center
 
 % make sure we have all the parameters we need
 if ~isfield(ex.stim.vals,'sf_range') || isempty(ex.stim.vals.sf_range)
@@ -44,7 +45,10 @@ end
 
 %%
 sv = ex.stim.vals;  % stimvals
- 
+
+%% adjust stimulus center for geometry correction?
+geomCorrect = isfield(ex.setup,"scal");
+
 %%
 % include y_offset as a cue towards the correct target for the
 % discrimination task, if we have it
@@ -205,6 +209,9 @@ end
 % pixels and is therefore symmetric around the center of the texture:
 visiblesize = 2*texsize+1;
 
+% used for calculations with geometry correction
+visiblesizeDeg = visiblesize*dpp;
+
 white = ex.idx.white;
 black = ex.idx.black; 
 
@@ -311,16 +318,24 @@ end
 % Definition of the drawn rectangle on the screen:
 % Compute it to  be the visible size of the grating, centered on the
 % defined stimulus center
-left = ppd*sv.x0+ex.fix.PCtr(1)-visiblesize/2;
-bottom = ppd*y0+ex.fix.PCtr(2)-visiblesize/2;
-dstRect=[left bottom left+visiblesize bottom+visiblesize];
-%dstRect=CenterRect(dstRect, screenRect)
+
+if ~geomCorrect
+    left = ppd*sv.x0+ex.fix.PCtr(1)-visiblesize/2;
+    bottom = ppd*y0+ex.fix.PCtr(2)-visiblesize/2;
+    dstRect=[left bottom left+visiblesize bottom+visiblesize];
+else
+    % Find image center and place pixel-defined mask there
+    [x0Pix,y0Pix]   = deg2pixelxy(sv.x0,sv.y0,ex.setup);
+    left    = x0Pix-visiblesize/2;
+    bottom  = y0Pix-visiblesize/2;
+    dstRect = round([left bottom left+visiblesize bottom+visiblesize]);
+end
 
 % compute dstRect if we have a second stimulus
 dstRect2 = [];
 if isfield(ex.stim.vals,'stim2') & ex.stim.vals.stim2
     left = ppd*sv.x02+ex.fix.PCtr(1)-visiblesize/2;
-    bottom = ppd*sv.y02+ex.fix.PCtr(2)-visiblesize/2;   
+    bottom = ppd*sv.y02+ex.fix.PCtr(2)-visiblesize/2;
     dstRect2=[left bottom left+visiblesize bottom+visiblesize];
 else ex.stim.vals.stim2 = 0;
 end
